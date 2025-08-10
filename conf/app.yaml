@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wsc-deployment
+  namespace: wsc
+  labels:
+    skills/version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      skills/version: v1
+  template:
+    metadata:
+      labels:
+        skills/version: v1
+    spec:
+      containers:
+        - name: app
+          image: APP_IMAGE
+          ports:
+            - containerPort: 8000
+              protocol: TCP

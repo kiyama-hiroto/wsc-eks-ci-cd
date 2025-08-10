@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - DATETIME=$(date +%Y%m%d%H%M%S)
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 381491935073.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t 381491935073.dkr.ecr.us-east-1.amazonaws.com/wsc:$DATETIME .
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push 381491935073.dkr.ecr.us-east-1.amazonaws.com/wsc:$DATETIME
+      - printf '{"ImageURI":"%s"}' 381491935073.dkr.ecr.us-east-1.amazonaws.com/wsc:$DATETIME > imageDetail.json
+      
+artifacts:
+  files: 
+    - imageDetail.json
+    - conf/app.yaml
+    - conf/ingress.yaml
+    - conf/service.yaml
+    - appspec.yaml
+    - scripts/deploy.sh 
+  secondary-artifacts:
+    ImageArtifact:
+      files:
+        - imageDetail.json
+  

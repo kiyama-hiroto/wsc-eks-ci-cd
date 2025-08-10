@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wsc-svc
+  namespace: wsc
+  labels:
+    skills/version: v1
+spec:
+  type: NodePort
+  selector:
+    skills/version: v1
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP

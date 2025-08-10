@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wsc-ing
+  namespace: wsc
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: wsc-alb
+    alb.ingress.kubernetes.io/security-groups: wsc-alb-sg
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 8000}]'
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wsc-svc
+                port:
+                  number: 8000
