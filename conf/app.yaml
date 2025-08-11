@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: APP_IMAGE
+          image: 381491935073.dkr.ecr.us-east-1.amazonaws.com/wsc:APP_IMAGE
           ports:
             - containerPort: 8000
               protocol: TCP

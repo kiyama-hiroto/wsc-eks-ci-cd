@@ -18,18 +18,11 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 381491935073.dkr.ecr.us-east-1.amazonaws.com/wsc:$DATETIME
-      - printf '{"ImageURI":"%s"}' 381491935073.dkr.ecr.us-east-1.amazonaws.com/wsc:$DATETIME > imageDetail.json
+      - sed -i "s|APP_IMAGE|$DATETIME|g" conf/app.yaml
       
 artifacts:
   files: 
-    - imageDetail.json
     - conf/app.yaml
     - conf/ingress.yaml
     - conf/service.yaml
-    - appspec.yaml
-    - scripts/deploy.sh 
-  secondary-artifacts:
-    ImageArtifact:
-      files:
-        - imageDetail.json
   
