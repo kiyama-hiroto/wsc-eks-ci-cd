@@ -1,9 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wsc-ing
+  name: wsc-ing-alb
   namespace: wsc
   annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/load-balancer-name: wsc-alb
     alb.ingress.kubernetes.io/security-groups: wsc-alb-sg
     alb.ingress.kubernetes.io/target-type: ip
